@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from .fields import OrderField
+
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
@@ -29,12 +31,10 @@ class Course(models.Model):
 
 
 class Module(models.Model):
-    course = models.ForeignKey(Course,
-                               related_name='modules',
-                               on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='modules', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    order = models.OrderField(blank=True, for_fields=['course'])
+    order = OrderField(blank=True, for_fields=['course'])
 
     class Meta:
         ordering = ['order']
